@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw 全球产品动态追踪 | OpenClaw Global Product Tracker</title>
+    <style>
+        :root {
+            --primary: #065A82;
+            --secondary: #1C7293;
+            --accent: #21295C;
+            --light: #CADCFC;
+            --white: #FFFFFF;
+            --text: #333333;
+            --bg-light: #f5f7fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Language Switcher */
+        .lang-switch {
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px;
+            border-radius: 25px;
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--white);
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn.active {
+            background: var(--white);
+            color: var(--primary);
+        }
+        
+        .lang-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card.tencent { border-left: 4px solid #4472C4; }
+        .stat-card.alibaba { border-left: 4px solid #ED7D31; }
+        .stat-card.bytedance { border-left: 4px solid #70AD47; }
+        .stat-card.global { border-left: 4px solid #636366; }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-desc {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 10px 20px;
+            border: none;
+            background: var(--white);
+            color: var(--text);
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .filter-tab.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .filter-tab:hover:not(.active) {
+            background: var(--light);
+        }
+        
+        /* Product Cards */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .product-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+        }
+        
+        .card-header.alibaba { background: linear-gradient(135deg, #ED7D31 0%, #F5A623 100%); }
+        .card-header.bytedance { background: linear-gradient(135deg, #70AD47 0%, #9DC668 100%); }
+        .card-header.global { background: linear-gradient(135deg, #636366 0%, #8E8E93 100%); }
+        
+        .card-date {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .card-type {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        
+        .card-body {
+            padding: 1.2rem;
+        }
+        
+        .card-desc {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .card-footer {
+            padding: 1rem 1.2rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .company-tag {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .company-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .tencent .company-dot { background: #4472C4; }
+        .alibaba .company-dot { background: #ED7D31; }
+        .bytedance .company-dot { background: #70AD47; }
+        .global .company-dot { background: #636366; }
+        
+        .card-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .card-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--accent);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-text {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🦞</div>
+                <span>OpenClaw Tracker</span>
+            </div>
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="ja">日本語</button>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="stats-grid">
+            <div class="stat-card tencent">
+                <div class="stat-title" data-i18n="stats.tencent.title">腾讯系产品 (龙虾特工队)</div>
+                <div class="stat-value">5</div>
+                <div class="stat-desc" data-i18n="stats.tencent.desc">WorkBuddy/QClaw/QQ/云端/ADP</div>
+            </div>
+            <div class="stat-card alibaba">
+                <div class="stat-title" data-i18n="stats.alibaba.title">阿里系产品</div>
+                <div class="stat-value">4</div>
+                <div class="stat-desc" data-i18n="stats.alibaba.desc">OpenClaw云服务/HiClaw/钉钉/PAI</div>
+            </div>
+            <div class="stat-card bytedance">
+                <div class="stat-title" data-i18n="stats.bytedance.title">字节系产品</div>
+                <div class="stat-value">3</div>
+                <div class="stat-desc" data-i18n="stats.bytedance.desc">ArkClaw/PICO OS/豆包</div>
+            </div>
+            <div class="stat-card global">
+                <div class="stat-title" data-i18n="stats.global.title">全球动态</div>
+                <div class="stat-value">17</div>
+                <div class="stat-desc" data-i18n="stats.global.desc">覆盖中、美、日、韩、欧洲</div>
+            </div>
+        </section>
+        
+        <section class="filter-tabs">
+            <button class="filter-tab active" data-filter="all" data-i18n="filter.all">全部</button>
+            <button class="filter-tab" data-filter="tencent" data-i18n="filter.tencent">腾讯</button>
+            <button class="filter-tab" data-filter="alibaba" data-i18n="filter.alibaba">阿里</button>
+            <button class="filter-tab" data-filter="bytedance" data-i18n="filter.bytedance">字节跳动</button>
+            <button class="filter-tab" data-filter="global" data-i18n="filter.global">全球</button>
+        </section>
+        
+        <section class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically inserted here -->
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text" data-i18n="footer.text">OpenClaw 全球产品动态追踪 | 每日更新</p>
+            <p class="footer-text" style="margin-top: 0.5rem; opacity: 0.6;">Data updated: 2026-03-13</p>
+        </div>
+    </footer>
+
+    <script>
+        // Multi-language content
+        const translations = {
+            zh: {
+                stats: {
+                    tencent: { title: "腾讯系 (龙虾特工队)", desc: "WorkBuddy/QClaw/QQ/云端/ADP" },
+                    alibaba: { title: "阿里系产品", desc: "OpenClaw云服务/HiClaw/钉钉/PAI" },
+                    bytedance: { title: "字节系产品", desc: "ArkClaw/PICO OS/豆包" },
+                    global: { title: "全球动态", desc: "百度/优刻得/华为/GitHub第一" }
+                },
+                filter: { all: "全部", tencent: "腾讯", alibaba: "阿里", bytedance: "字节跳动", global: "全球" },
+                footer: { text: "OpenClaw 全球产品动态追踪 | 每日更新" },
+                card: { readMore: "查看详情", company: "厂商" },
+                types: { "AI平台": "AI平台", "AI智能体": "AI智能体", "云部署": "云部署", "XR操作系统": "XR操作系统", "硬件": "硬件", "AI助手": "AI助手", "AI应用": "AI应用", "开源项目": "开源项目" }
+            },
+            en: {
+                stats: {
+                    tencent: { title: "Tencent (Lobster Task Force)", desc: "WorkBuddy/QClaw/QQ/Cloud/ADP" },
+                    alibaba: { title: "Alibaba Products", desc: "OpenClaw/HiClaw/DingTalk/PAI" },
+                    bytedance: { title: "ByteDance Products", desc: "ArkClaw/PICO OS/Doubao" },
+                    global: { title: "Global Updates", desc: "Baidu/UCloud/Huawei/#1 on GitHub" }
+                },
+                filter: { all: "All", tencent: "Tencent", alibaba: "Alibaba", bytedance: "ByteDance", global: "Global" },
+                footer: { text: "OpenClaw Global Product Tracker | Daily Updates" },
+                card: { readMore: "Read More", company: "Company" },
+                types: { "AI平台": "AI Platform", "AI智能体": "AI Agent", "云部署": "Cloud Deployment", "XR操作系统": "XR OS", "硬件": "Hardware", "AI助手": "AI Assistant", "AI应用": "AI App", "开源项目": "Open Source" }
+            },
+            ja: {
+                stats: {
+                    tencent: { title: "テンセント (ロブスター隊)", desc: "WorkBuddy/QClaw/QQ/Cloud/ADP" },
+                    alibaba: { title: "アリババ製品", desc: "OpenClaw/HiClaw/钉钉/PAI" },
+                    bytedance: { title: "バイトダンス製品", desc: "ArkClaw/PICO OS/豆包" },
+                    global: { title: "グローバル動向", desc: "百度/UCloud/Huawei/GitHub一位" }
+                },
+                filter: { all: "すべて", tencent: "テンセント", alibaba: "アリババ", bytedance: "バイトダンス", global: "グローバル" },
+                footer: { text: "OpenClaw グローバル製品トラッカー | 每日更新" },
+                card: { readMore: "詳細を見る", company: "企業" },
+                types: { "AIプラットフォーム": "AIプラットフォーム", "AIエージェント": "AIエージェント", "クラウドデプロイ": "クラウドデプロイ", "XR OS": "XR OS", "ハードウェア": "ハードウェア", "AIアシスタント": "AIアシスタント", "AIアプリ": "AIアプリ", "オープンソース": "オープンソース" }
+            }
+        };
+        
+        // Product data
+        const products = [
+            // 腾讯 - 龙虾特工队全家桶
+            {
+                id: 1,
+                company: "tencent",
+                date: "2026-03-09",
+                title: { zh: "WorkBuddy (龙虾特工队全家桶)", en: "WorkBuddy (Lobster Task Force Bundle)", ja: "WorkBuddy（ロブスタータスクフォース Bundle）" },
+                type: { zh: "AI智能体", en: "AI Agent", ja: "AIエージェント" },
+                desc: { zh: "腾讯版小龙虾，全场景桌面智能体，零部署零配置，浏览器即用，内置20+Skills技能包", en: "Tencent's lobster, full场景 desktop AI agent, zero deployment, browser-ready, 20+ built-in Skills", ja: "テンセント版小龙虾、全シーンAIエージェント、デプロイ不要、ブラウザで使える" },
+                url: "#"
+            },
+            {
+                id: 2,
+                company: "tencent",
+                date: "2026-03-09",
+                title: { zh: "QClaw (龙虾特工队)", en: "QClaw (Lobster Task Force)", ja: "QClaw（ロブスタータスクフォース）" },
+                type: { zh: "AI智能体", en: "AI Agent", ja: "AIエージェント" },
+                desc: { zh: "一键部署版，支持微信/QQ远程操控，本地电脑轻松部署，支持Kimi/MiniMax/GLM/DeepSeek", en: "One-click deployment, WeChat/QQ remote control, local PC deployment, supports Kimi/MiniMax/GLM/DeepSeek", ja: "ワandeployment版、WeChat/QQリモート操控対応、ローカルPCにデプロイ可能" },
+                url: "#"
+            },
+            {
+                id: 3,
+                company: "tencent",
+                date: "2026-03-08",
+                title: { zh: "QQ接入OpenClaw (龙虾特工队)", en: "QQ OpenClaw Integration", ja: "QQ OpenClaw統合" },
+                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
+                desc: { zh: "QQ机器人官方接入OpenClaw，单个QQ号最多可创建5个机器人，支持多媒体交互", en: "QQ bot official OpenClaw integration, up to 5 bots per QQ account, multimedia support", ja: "QQボット公式OpenClaw対応、QQ番号당5つまでボット作成可能" },
+                url: "#"
+            },
+            {
+                id: 4,
+                company: "tencent",
+                date: "2026-03-06",
+                title: { zh: "腾讯云Lighthouse OpenClaw (龙虾特工队)", en: "Tencent Cloud Lighthouse OpenClaw", ja: "Tencent Cloud Lighthouse OpenClaw" },
+                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
+                desc: { zh: "云端部署方案，用户规模突破10万，一键购买+一键部署", en: "Cloud deployment solution, 100K+ users, one-click purchase & deployment", ja: "クラウドデプロイ方案、用户規模10万突破、ワandeployment可能" },
+                url: "#"
+            },
+            {
+                id: 5,
+                company: "tencent",
+                date: "2026-03-11",
+                title: { zh: "腾讯云ADP (龙虾特工队)", en: "Tencent Cloud ADP", ja: "テンセントクラウドADP" },
+                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
+                desc: { zh: "企业级智能体开发平台，部分第三方模型结束免费公测，正式进入商业化", en: "Enterprise AI agent platform, third-party models enter commercial billing", ja: "エンタープライズAIエージェントプラットフォーム、サードパーティモデル商用化" },
+                url: "#"
+            },
+            // 阿里系
+            {
+                id: 6,
+                company: "alibaba",
+                date: "2026-03",
+                title: { zh: "阿里云OpenClaw全套云服务", en: "Alibaba Cloud OpenClaw Full Services", ja: "Alibaba Cloud OpenClaw 全套クラウドサービス" },
+                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
+                desc: { zh: "轻量应用服务器一键部署，月成本低至17.8元，支持QQ/飞书/钉钉集成", en: "Light server one-click deployment, from $2.5/month, QQ/DingTalk integration", ja: "Light Serverワandeployment、月額17.8元〜、QQ/飛書/钉钉統合" },
+                url: "#"
+            },
+            {
+                id: 7,
+                company: "alibaba",
+                date: "2026-03",
+                title: { zh: "阿里云HiClaw (Team版)", en: "Alibaba Cloud HiClaw (Team Edition)", ja: "Alibaba Cloud HiClaw（Team版）" },
+                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
+                desc: { zh: "Manager/Worker架构，主打团队协作，零信任安全设计，技能和内存完全隔离", en: "Manager/Worker architecture, team collaboration, zero-trust security, isolated skills & memory", ja: "Manager/Workerアーキテクチャ、チームコラボレーション、ゼロトラストセキュリティ" },
+                url: "#"
+            },
+            {
+                id: 8,
+                company: "alibaba",
+                date: "2026-03-10",
+                title: { zh: "钉钉接入OpenClaw", en: "DingTalk OpenClaw Integration", ja: "钉钉OpenClaw統合" },
+                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
+                desc: { zh: "API调用限时免费至2026年3月31日，可调用钉钉AI表格、Teambition等产品技能", en: "API calls free until Mar 31 2026, supports DingTalk AI forms, Teambition integration", ja: "API呼び出し無料〜2026年3月31日、钉钉AIテーブル、Teambition等功能対応" },
+                url: "#"
+            },
+            {
+                id: 9,
+                company: "alibaba",
+                date: "2026-03",
+                title: { zh: "PAI灵骏智算服务", en: "PAI Lingjun Smart Computing", ja: "PAI霊駿スマートコンピューティング" },
+                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
+                desc: { zh: "国际站(新加坡区域)正式开服，支持按需开通", en: "International site (Singapore) officially launched, on-demand available", ja: "国際サイト（シンガポール）正式オープン、オンデマンド対応" },
+                url: "#"
+            },
+            // 字节跳动
+            {
+                id: 10,
+                company: "bytedance",
+                date: "2026-03-09",
+                title: { zh: "火山引擎ArkClaw", en: "Volcengine ArkClaw", ja: "Volcengine ArkClaw" },
+                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
+                desc: { zh: "云上SaaS版OpenClaw，免安装，网页即用，轻松云养虾", en: "Cloud SaaS OpenClaw, no installation, browser-based, easy 'lobster farming'", ja: "クラウドSaaS版OpenClaw、インストール不要、ブラウザで使える" },
+                url: "#"
+            },
+            {
+                id: 11,
+                company: "bytedance",
+                date: "2026-03-02",
+                title: { zh: "PICO OS 6", en: "PICO OS 6", ja: "PICO OS 6" },
+                type: { zh: "XR操作系统", en: "XR OS", ja: "XR OS" },
+                desc: { zh: "下一代空间操作系统预告发布，针对XR行业痛点进行底层重构", en: "Next-gen spatial OS preview, addressing XR industry pain points", ja: "次世代空間OSプレビュー公開、XR業界の問題点底層から再構築" },
+                url: "#"
+            },
+            {
+                id: 12,
+                company: "bytedance",
+                date: "2026-03-02",
+                title: { zh: "豆包App 购物功能", en: "Doubao App Shopping", ja: "豆包App ショッピング機能" },
+                type: { zh: "AI助手", en: "AI Assistant", ja: "AIアシスタント" },
+                desc: { zh: "内测购物下单功能，用户可在App内直接完成商品浏览、下单与支付全流程", en: "In-app shopping, complete browsing to payment in one app", ja: "アプリ内ショッピング対応、閲覧から決済までワ.stopで完了" },
+                url: "#"
+            },
+            // 全球/其他厂商
+            {
+                id: 13,
+                company: "global",
+                date: "2026-03-03",
+                title: { zh: "OpenClaw GitHub Star 全球第一", en: "OpenClaw #1 on GitHub", ja: "OpenClaw GitHub 世界一位" },
+                type: { zh: "开源项目", en: "Open Source", ja: "オープンソース" },
+                desc: { zh: "24.8万星标登顶GitHub，超越Linux和React，成为全球最受欢迎开源项目", en: "248K stars, #1 on GitHub, surpassing Linux & React", ja: "24.8万Star GitHub一位、LinuxとReactを超える" },
+                url: "https://github.com"
+            },
+            {
+                id: 14,
+                company: "global",
+                date: "2026-03-12",
+                title: { zh: "百度 红手指Operator", en: "Baidu RedFinger Operator", ja: "百度 RedFinger Operator" },
+                type: { zh: "AI应用", en: "AI App", ja: "AIアプリ" },
+                desc: { zh: "全球首款手机龙虾应用，下载App即可手机养虾，上线即爆火", en: "World's first mobile lobster app, download to farm lobster on phone, instantly popular", ja: "世界初の手机龙虾アプリ、ダウンロードしてスマホで养殖可能" },
+                url: "#"
+            },
+            {
+                id: 15,
+                company: "global",
+                date: "2026-03",
+                title: { zh: "百度智能云 OpenClaw", en: "Baidu Cloud OpenClaw", ja: "百度クラウド OpenClaw" },
+                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
+                desc: { zh: "提供从算力资源到模型服务的全方位支持", en: "Full support from computing resources to model services", ja: "コンピューティングリソースからモデルサービスまでのフルサポート" },
+                url: "#"
+            },
+            {
+                id: 16,
+                company: "global",
+                date: "2026-01",
+                title: { zh: "优刻得 OpenClaw部署镜像", en: "UCloud OpenClaw Deployment", ja: "UCloud OpenClaw デプロイ" },
+                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
+                desc: { zh: "行业内率先实现云端部署，服务已上线美、新、日等多个海外节点", en: "First cloud deployment, available in US, Singapore, Japan and other regions", ja: "業界初のクラウドデプロイ、米・新加坡・日本など海外ノード対応" },
+                url: "#"
+            },
+            {
+                id: 17,
+                company: "global",
+                date: "2026-03",
+                title: { zh: "华为云 OpenClaw部署", en: "Huawei Cloud OpenClaw", ja: "ファーウェイクラウド OpenClaw" },
+                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
+                desc: { zh: "一键部署入门教程，接入微信新手保姆级指南", en: "One-click deployment guide, WeChat integration tutorial", ja: "ワandeployment入門ガイド、WeChat連携チュートリアル" },
+                url: "#"
+            }
+        ];
+        
+        let currentLang = 'zh';
+        let currentFilter = 'all';
+        
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentLang = btn.dataset.lang;
+                updateContent();
+            });
+        });
+        
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.filter;
+                renderProducts();
+            });
+        });
+        
+        function updateContent() {
+            // Update stats
+            document.querySelectorAll('.stat-card').forEach(card => {
+                const type = card.classList.contains('tencent') ? 'tencent' : 
+                             card.classList.contains('alibaba') ? 'alibaba' :
+                             card.classList.contains('bytedance') ? 'bytedance' : 'global';
+                
+                const titleEl = card.querySelector('.stat-title');
+                const descEl = card.querySelector('.stat-desc');
+                
+                if (translations[currentLang].stats[type]) {
+                    titleEl.textContent = translations[currentLang].stats[type].title;
+                    descEl.textContent = translations[currentLang].stats[type].desc;
+                }
+            });
+            
+            // Update filter tabs
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                const filter = tab.dataset.filter;
+                tab.textContent = translations[currentLang].filter[filter];
+            });
+            
+            // Update footer
+            document.querySelector('[data-i18n="footer.text"]').textContent = 
+                translations[currentLang].footer.text;
+            
+            renderProducts();
+        }
+        
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const filteredProducts = currentFilter === 'all' 
+                ? products 
+                : products.filter(p => p.company === currentFilter);
+            
+            grid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card ${product.company}">
+                    <div class="card-header ${product.company}">
+                        <div class="card-date">${product.date}</div>
+                        <div class="card-title">${product.title[currentLang]}</div>
+                        <span class="card-type">${product.type[currentLang]}</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-desc">${product.desc[currentLang]}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="company-tag">
+                            <span class="company-dot"></span>
+                            <span>${translations[currentLang].card.company}: ${product.company.toUpperCase()}</span>
+                        </div>
+                        <a href="${product.url}" class="card-link">${translations[currentLang].card.readMore} →</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Initial render
+        renderProducts();
+    </script>
+</body>
+</html>
