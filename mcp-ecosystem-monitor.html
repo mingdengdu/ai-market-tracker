@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP 生态监测中心 - 国内大厂 & 风控安全全景追踪</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--accent:#58a6ff;--accent2:#7ee787;--accent3:#ffa657;--warn:#f85149;--purple:#d2a8ff;--gold:#f0c000;--text:#e6edf3;--dim:#8b949e;--border:#30363d}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px}
+.header{background:linear-gradient(135deg,#0d1117,#161b22);border-bottom:1px solid var(--border);padding:20px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+.header-inner{max-width:1440px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo h1{font-size:20px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo .sub{font-size:11px;color:var(--dim)}
+.stats{display:flex;gap:20px}
+.stat .v{font-size:22px;font-weight:700;color:var(--accent);text-align:center}
+.stat .l{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;text-align:center}
+.main{max-width:1440px;margin:0 auto;padding:16px 32px 40px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.search{flex:1;min-width:200px;padding:10px 16px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none}
+.search:focus{border-color:var(--accent)}
+.btn{padding:8px 16px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--dim);font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover,.btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tabs{display:flex;gap:4px;background:var(--card);padding:4px;border-radius:10px;border:1px solid var(--border);margin-bottom:20px;overflow-x:auto}
+.tab{padding:8px 18px;border-radius:8px;font-size:13px;cursor:pointer;color:var(--dim);border:none;background:none;white-space:nowrap}
+.tab:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.tab.on{background:var(--accent);color:#fff;font-weight:600}
+.panel{display:none}.panel.on{display:block}
+.stitle{font-size:18px;font-weight:700;margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+.badge{background:var(--accent);color:#fff;font-size:10px;padding:2px 8px;border-radius:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:16px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s;animation:fadeIn .4s ease-out backwards}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 20px rgba(88,166,255,.1)}
+.card-h{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.card-h .name{font-size:16px;font-weight:700}
+.cnt{background:rgba(88,166,255,.15);color:var(--accent);padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.card-b{padding:14px 18px}
+.ptag{display:inline-block;background:rgba(126,231,135,.12);color:var(--accent2);padding:2px 8px;border-radius:6px;font-size:11px;margin:0 4px 6px 0}
+.itag{display:inline-block;background:rgba(255,255,255,.06);color:var(--dim);padding:2px 6px;border-radius:4px;font-size:10px;margin:0 3px 4px 0;border:1px solid rgba(255,255,255,.05)}
+.card-f{padding:8px 18px;background:rgba(0,0,0,.2);display:flex;justify-content:space-between;font-size:11px;color:var(--dim)}
+.up{color:var(--accent2)}.down{color:var(--warn)}.flat{color:var(--dim)}
+.heat{display:flex;gap:2px}.heat span{width:7px;height:18px;border-radius:2px;background:var(--border)}
+.heat span.a{background:var(--accent2)}.heat span.h{background:var(--accent3)}.heat span.f{background:var(--warn)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#1a2332;padding:10px 14px;text-align:left;color:var(--accent);border-bottom:2px solid var(--accent);white-space:nowrap;position:sticky;top:0}
+td{padding:8px 14px;border-bottom:1px solid var(--border)}
+tr:hover td{background:rgba(255,255,255,.03)}
+.tw{overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin:16px 0}
+.r1{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:linear-gradient(135deg,#f0c000,#ff8c00);color:#000}
+.r2{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:linear-gradient(135deg,#c0c0c0,#a0a0a0);color:#000}
+.r3{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff}
+.rn{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--border);color:var(--dim)}
+.hmgrid{display:grid;grid-template-columns:90px repeat(12,1fr);gap:2px;font-size:10px}
+.hml{padding:5px;color:var(--dim);display:flex;align-items:center}
+.hmc{padding:5px 3px;border-radius:3px;text-align:center;font-weight:600;cursor:pointer;transition:transform .2s}
+.hmc:hover{transform:scale(1.15)}
+.h0{background:rgba(255,255,255,.03);color:var(--dim)}
+.h1{background:rgba(88,166,255,.15);color:var(--accent)}
+.h2{background:rgba(88,166,255,.3);color:var(--accent)}
+.h3{background:rgba(126,231,135,.3);color:var(--accent2)}
+.h4{background:rgba(255,166,87,.4);color:var(--accent3)}
+.h5{background:rgba(248,81,73,.5);color:var(--warn)}
+.hmh{font-weight:600;color:var(--dim);padding:5px 3px;text-align:center}
+.tl{position:relative;padding-left:28px;margin:16px 0}
+.tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
+.tli{position:relative;margin-bottom:14px;padding:10px 14px;background:var(--card);border-radius:8px;border:1px solid var(--border)}
+.tli::before{content:'';position:absolute;left:-22px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tld{font-size:11px;color:var(--accent);font-weight:600;margin-bottom:2px}
+.tlc{font-size:12px}
+.pbar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;width:70px;display:inline-block}
+.pfill{height:100%;border-radius:3px}
+.footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:var(--dim);font-size:12px}
+.risk-hero{background:linear-gradient(135deg,#1a0d0d,#0d1117 60%);border:1px solid #f8514933;border-radius:14px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.risk-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f85149,#ffa657,#f0c000)}
+.risk-hero h2{font-size:22px;color:var(--warn);margin-bottom:6px}
+.risk-hero p{font-size:13px;color:var(--dim);line-height:1.8}
+.risk-hero .highlight{color:var(--gold);font-weight:700}
+.risk-section{margin-bottom:28px}
+.risk-section-title{font-size:16px;font-weight:700;color:var(--accent3);margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.risk-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;transition:all .3s;margin-bottom:14px}
+.risk-card:hover{border-color:var(--warn);box-shadow:0 4px 16px rgba(248,81,73,.08)}
+.risk-card .rc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.risk-card .rc-name{font-size:15px;font-weight:700}
+.risk-card .rc-type{font-size:10px;padding:3px 8px;border-radius:12px;font-weight:600}
+.risk-card .rc-desc{font-size:12px;color:var(--dim);margin-bottom:10px;line-height:1.7}
+.risk-card .rc-caps{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.risk-card .rc-cap{font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(248,81,73,.1);color:var(--warn);border:1px solid rgba(248,81,73,.2)}
+.risk-card .rc-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);padding-top:8px;border-top:1px solid var(--border);flex-wrap:wrap;gap:8px}
+.risk-details{margin-top:10px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.02);overflow:hidden}
+.risk-details summary{cursor:pointer;list-style:none;padding:10px 12px;font-size:12px;font-weight:700;color:var(--accent);background:rgba(88,166,255,.04)}
+.risk-details summary::-webkit-details-marker{display:none}
+.risk-details[open] summary{border-bottom:1px solid var(--border);background:rgba(88,166,255,.08)}
+.risk-detail-body{padding:12px}
+.risk-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px}
+.risk-detail-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:10px}
+.risk-detail-label{display:block;font-size:10px;color:var(--dim);margin-bottom:4px;letter-spacing:.5px;text-transform:uppercase}
+.risk-detail-value{display:block;font-size:12px;color:var(--text);font-weight:600;line-height:1.6}
+.risk-detail-line{font-size:12px;color:var(--dim);line-height:1.8;margin-top:8px}
+.risk-detail-line strong{color:var(--text)}
+.risk-detail-link{color:var(--accent);text-decoration:none;word-break:break-all}
+.risk-detail-link:hover{text-decoration:underline}
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px}
+.risk-verdict{background:linear-gradient(135deg,#0d1a0d,#0d1117 60%);border:1px solid rgba(126,231,135,.3);border-radius:14px;padding:24px 28px;margin-top:24px}
+.risk-verdict h3{font-size:18px;color:var(--accent2);margin-bottom:12px}
+.risk-verdict .rv-item{padding:10px 0;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start}
+.risk-verdict .rv-item:last-child{border-bottom:none}
+.risk-verdict .rv-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.risk-verdict .rv-text{font-size:13px;line-height:1.7}
+.risk-verdict .rv-text strong{color:var(--accent3)}
+.radar-chart{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:16px}
+.radar-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.radar-item h4{font-size:14px;font-weight:700;margin-bottom:12px}
+.radar-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:11px}
+.radar-bar-label{width:100px;color:var(--dim);flex-shrink:0;text-align:right}
+.radar-bar{flex:1;height:14px;background:var(--border);border-radius:3px;overflow:hidden;position:relative}
+.radar-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.radar-bar-val{width:30px;flex-shrink:0;font-weight:600;text-align:right}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.stats{display:none}.hmgrid{font-size:8px}.risk-grid{grid-template-columns:1fr}.radar-chart{grid-template-columns:1fr}.risk-detail-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+<div class="logo"><div class="logo-icon">🌐</div><div><h1>MCP 生态监测中心</h1><div class="sub">国内大厂 & 科技公司 MCP 产品全景追踪 + 风控安全竞争分析</div></div></div>
+<div class="stats">
+<div class="stat"><div class="v">18</div><div class="l">监测企业</div></div>
+<div class="stat"><div class="v">380+</div><div class="l">MCP 产品</div></div>
+<div class="stat"><div class="v">20</div><div class="l">风控产品</div></div>
+<div class="stat"><div class="v">2026.03</div><div class="l">最后更新</div></div>
+</div>
+</div></div>
+
+<div class="main">
+<div class="controls">
+<input class="search" id="si" placeholder="🔍 搜索公司、产品、平台..." oninput="doFilter()">
+<button class="btn on" onclick="setTier('all',this)">全部</button>
+<button class="btn" onclick="setTier('t1',this)">T1 大厂</button>
+<button class="btn" onclick="setTier('t2',this)">T2 科技</button>
+<button class="btn" onclick="setTier('t3',this)">T3 新锐</button>
+</div>
+<div class="tabs">
+<button class="tab on" onclick="setTab('cards',this)">📊 产品卡片</button>
+<button class="tab" onclick="setTab('table',this)">📋 汇总表</button>
+<button class="tab" onclick="setTab('heatmap',this)">🔥 热度图</button>
+<button class="tab" onclick="setTab('timeline',this)">📅 时间线</button>
+<button class="tab" onclick="setTab('risk',this)">🛡️ 风控安全</button>
+</div>
+
+<div id="p-cards" class="panel on"></div>
+<div id="p-table" class="panel"></div>
+<div id="p-heatmap" class="panel"></div>
+<div id="p-timeline" class="panel"></div>
+<div id="p-risk" class="panel"></div>
+</div>
+<div class="footer">MCP 生态监测中心 · 数据来源：公开信息整理 · 最后更新：2026 年 3 月<br>Built for RCE Cloud × OpenClaw 升级路径研究</div>
+
+<script>
+const D=[
+{n:"腾讯云",t:"t1",c:"#58a6ff",p:"MCP 广场",cnt:55,ps:["COS对象存储","CVM云服务器","TAPD项目管理","企业微信","腾讯会议","日志服务CLS","TDesign","微信支付","云函数SCF","CODING","腾讯文档","混元大模型","即时通信IM","CDN","云监控","API网关","TKE容器","安全运营中心","腾讯翻译","云数据库"],heat:5,trend:"up",date:"2025.03",open:90,hh:[0,1,2,3,3,4,4,4,5,5,5,5]},
+{n:"阿里云",t:"t1",c:"#ffa657",p:"百炼 MCP 广场",cnt:50,ps:["通义千问","钉钉","OSS","RDS","函数计算","日志服务","DataWorks","MaxCompute","PAI","阿里云盘","优酷","飞猪","1688","闲鱼","夸克","通义灵码"],heat:5,trend:"up",date:"2025.04",open:88,hh:[0,0,1,2,3,3,4,4,5,5,5,5]},
+{n:"字节跳动",t:"t1",c:"#d2a8ff",p:"Coze MCP Store",cnt:40,ps:["扣子Coze","飞书","豆包","火山引擎","抖音","TOS对象存储","ByteHouse","剪映","番茄小说","头条"],heat:4,trend:"up",date:"2025.05",open:82,hh:[0,0,0,1,2,3,3,4,4,4,4,4]},
+{n:"百度",t:"t1",c:"#7ee787",p:"千帆 MCP Store",cnt:30,ps:["文心一言","百度地图","百度网盘","百度搜索","千帆大模型","如流","百家号","BOS","CCE","度小满"],heat:4,trend:"stable",date:"2025.06",open:75,hh:[0,0,0,0,1,2,3,3,4,4,4,4]},
+{n:"华为云",t:"t1",c:"#f85149",p:"ModelArts MCP",cnt:20,ps:["盘古大模型","OBS","FunctionGraph","GaussDB","CodeArts","WeLink","AppGallery","HiLens","ROMA","昇腾"],heat:3,trend:"up",date:"2025.08",open:65,hh:[0,0,0,0,0,1,1,2,2,3,3,3]},
+{n:"蚂蚁集团",t:"t1",c:"#f0c000",p:"支付宝 MCP",cnt:15,ps:["蚂蚁百灵","支付宝小程序","CodeFuse","OceanBase","mPaaS","蚂蚁链","芝麻信用","网商银行","花呗","余额宝"],heat:4,trend:"up",date:"2025.07",open:70,hh:[0,0,0,0,0,1,2,3,3,4,4,4]},
+{n:"智谱AI",t:"t2",c:"#58a6ff",p:"GLM MCP",cnt:15,ps:["GLM-4","AutoGLM","CogView","CogAgent","WebGLM","ChatGLM","清言","智谱清言API","知识图谱"],heat:4,trend:"up",date:"2025.06",open:80,hh:[0,0,0,0,1,2,3,3,4,4,4,4]},
+{n:"月之暗面",t:"t2",c:"#d2a8ff",p:"Kimi MCP",cnt:12,ps:["Kimi Chat","Kimi API","长文本处理","文档解析","搜索增强","知识库","Kimi开放平台","多模态"],heat:4,trend:"up",date:"2025.08",open:75,hh:[0,0,0,0,0,1,2,3,3,4,4,4]},
+{n:"科大讯飞",t:"t2",c:"#7ee787",p:"星火 MCP",cnt:12,ps:["星火大模型","语音识别","语音合成","同声传译","讯飞输入法","教育AI","医疗AI","智慧办公"],heat:3,trend:"stable",date:"2025.09",open:60,hh:[0,0,0,0,0,0,1,2,2,3,3,3]},
+{n:"京东",t:"t2",c:"#ffa657",p:"京东云 MCP",cnt:10,ps:["京东云","言犀大模型","JOS开放平台","京东物流","京东健康","京东金融","京麦"],heat:3,trend:"up",date:"2025.10",open:55,hh:[0,0,0,0,0,0,0,1,2,2,3,3]},
+{n:"金山办公",t:"t2",c:"#f0c000",p:"WPS AI MCP",cnt:10,ps:["WPS AI","WPS表格","WPS文档","WPS演示","金山文档","轻维表","金山会议","PDF转换"],heat:3,trend:"up",date:"2025.09",open:65,hh:[0,0,0,0,0,0,1,2,2,3,3,3]},
+{n:"360",t:"t2",c:"#f85149",p:"360 AI MCP",cnt:8,ps:["360智脑","360搜索","360安全卫士","奇安信","安全大模型","数字安全","浏览器"],heat:3,trend:"stable",date:"2025.10",open:50,hh:[0,0,0,0,0,0,0,1,2,2,3,3]},
+{n:"MiniMax",t:"t3",c:"#d2a8ff",p:"海螺 AI MCP",cnt:8,ps:["海螺AI","abab大模型","语音克隆","T2A","Talkie","星野","文本创作"],heat:3,trend:"up",date:"2025.11",open:70,hh:[0,0,0,0,0,0,0,0,1,2,3,3]},
+{n:"商汤科技",t:"t3",c:"#ffa657",p:"日日新 MCP",cnt:6,ps:["日日新大模型","SenseChat","秒画","如影","琼宇","商汤绝影"],heat:2,trend:"stable",date:"2025.12",open:50,hh:[0,0,0,0,0,0,0,0,0,1,2,2]},
+{n:"小米",t:"t3",c:"#58a6ff",p:"小爱 MCP",cnt:8,ps:["小爱同学","小米IoT","Hyper OS","小米汽车","米家","小米云服务","MIUI"],heat:3,trend:"up",date:"2025.11",open:45,hh:[0,0,0,0,0,0,0,0,1,2,3,3]},
+{n:"美团",t:"t3",c:"#7ee787",p:"美团 MCP",cnt:6,ps:["美团AI","大众点评","美团外卖","美团酒旅","美团买菜","美团优选"],heat:2,trend:"up",date:"2026.01",open:40,hh:[0,0,0,0,0,0,0,0,0,0,1,2]},
+{n:"网易",t:"t3",c:"#f0c000",p:"网易云 MCP",cnt:6,ps:["网易有道","云音乐","严选","网易邮箱","子曰大模型","有道翻译"],heat:2,trend:"stable",date:"2026.01",open:45,hh:[0,0,0,0,0,0,0,0,0,0,1,2]},
+{n:"快手",t:"t3",c:"#f85149",p:"快手 MCP",cnt:5,ps:["快手AI","可灵大模型","快手直播","快手电商","AceFun","一甜"],heat:2,trend:"up",date:"2026.02",open:40,hh:[0,0,0,0,0,0,0,0,0,0,0,2]}
+];
+
+const riskProducts = {
+  domestic: [
+    {n:"腾讯安全天御",co:"腾讯",type:"风控引擎",typeColor:"var(--accent)",
+     desc:"腾讯旗舰风控产品，Gartner 在线反欺诈市场指南中国唯一入选。覆盖注册保护、登录保护、活动防刷、交易反欺诈全链路。已在腾讯云 MCP 广场上线「安全运营中心」MCP。",
+     caps:["注册保护","登录保护","活动防刷","交易反欺诈","内容安全","验证码","IP画像","设备指纹"],
+     mcpStatus:"已上线 MCP",mcpDetail:"安全运营中心 MCP 已在腾讯云 MCP 广场发布",
+     aiAgent:"部分支持",heat:5,trend:"up",threat:"协同机会",
+     url:"https://cloud.tencent.com/product/tianyu"},
+    {n:"RCE Cloud (我们)",co:"腾讯 RCE",type:"MCP 风控",typeColor:"var(--warn)",
+     desc:"AI-Native 风控引擎，全球首个以 MCP Server + OpenClaw Skill 双模式发布的风控产品。6 个 MCP Tools 覆盖 IP 风险、VPN 检测、设备指纹、风险评估、策略管理、报告生成。",
+     caps:["MCP Server","OpenClaw Skill","IP风险检测","VPN/Tor检测","设备指纹","风险评估","策略CRUD","报告生成"],
+     mcpStatus:"原生 MCP",mcpDetail:"6 个 MCP Tools，stdio + HTTP 双传输，npx 一行启动",
+     aiAgent:"完全原生",heat:5,trend:"up",threat:"—",
+     url:""},
+    {n:"同盾科技",co:"同盾",type:"风控平台",typeColor:"var(--accent3)",
+     desc:"国内头部智能风控企业，艾瑞评为「金融智能体未来破局者」。核心产品包括反欺诈智能决策平台、设备指纹、知识图谱、联邦学习。正在探索大模型智能体方向。",
+     caps:["反欺诈决策","设备指纹","知识图谱","联邦学习","规则引擎","机器学习","实时计算","信贷风控"],
+     mcpStatus:"未上线 MCP",mcpDetail:"正探索大模型智能体，但尚未发布 MCP Server",
+     aiAgent:"探索中",heat:3,trend:"up",threat:"潜在竞品",
+     url:"https://www.tongdun.cn"},
+    {n:"数美科技",co:"数美",type:"内容+业务安全",typeColor:"var(--purple)",
+     desc:"专注内容安全与业务风控，覆盖文本/图片/音视频审核、注册登录保护、营销反作弊。客户涵盖字节跳动、小米等。提供 API 接入但未发布 MCP。",
+     caps:["文本审核","图片审核","音视频审核","注册保护","营销反作弊","验证码","设备指纹","智能运营"],
+     mcpStatus:"未上线 MCP",mcpDetail:"API 形态为主，暂无 MCP 或 AI Agent 集成计划",
+     aiAgent:"未支持",heat:2,trend:"stable",threat:"细分竞品",
+     url:"https://www.ishumei.com"},
+    {n:"顶象科技",co:"顶象",type:"业务安全",typeColor:"var(--accent2)",
+     desc:"业务安全领域深耕，覆盖端安全、实时风控、身份认证。独创防御云+业务感知技术架构，服务金融、电商、游戏等行业。",
+     caps:["端安全加固","实时风控","身份认证","验证码","设备指纹","IP画像","规则引擎","行为分析"],
+     mcpStatus:"未上线 MCP",mcpDetail:"传统 SDK + API 模式，未见 MCP 适配动态",
+     aiAgent:"未支持",heat:2,trend:"stable",threat:"细分竞品",
+     url:"https://www.dingxiang-inc.com"},
+    {n:"极验",co:"极验",type:"验证安全",typeColor:"var(--gold)",
+     desc:"行为验证码领头羊，GeeTest CAPTCHA 全球知名。核心能力是基于行为分析的人机识别，近年拓展到反爬虫、业务安全领域。",
+     caps:["行为验证码","滑块验证","点选验证","人机识别","反爬虫","流量安全","设备检测"],
+     mcpStatus:"未上线 MCP",mcpDetail:"验证码 SDK 模式，暂无 MCP 或 Agent 计划",
+     aiAgent:"未支持",heat:2,trend:"stable",threat:"互补产品",
+     url:"https://www.geetest.com"},
+    {n:"蚂蚁集团 · 芝麻信用/蚁盾",co:"蚂蚁",type:"信用+风控",typeColor:"var(--gold)",
+     desc:"蚂蚁旗下风控矩阵：芝麻信用评分、蚁盾风控引擎、智能反欺诈。支付宝 MCP 已上线，但风控能力尚未独立 MCP 化。正在布局百灵 Agent 智能体生态。",
+     caps:["芝麻信用","蚁盾风控","反欺诈","反洗钱","身份核验","人脸识别","联邦学习","智能决策"],
+     mcpStatus:"间接支持",mcpDetail:"支付宝 MCP 已上线，但蚁盾/芝麻信用未独立 MCP 化",
+     aiAgent:"探索中",heat:4,trend:"up",threat:"潜在竞品",
+     url:""},
+    {n:"网易易盾",co:"网易",type:"内容+业务安全",typeColor:"var(--accent)",
+     desc:"网易旗下安全品牌，核心能力在内容安全审核、反作弊、风控引擎。服务游戏、社交、电商等行业。",
+     caps:["内容审核","反外挂","反作弊","业务风控","验证码","设备指纹","IP画像","智能运营"],
+     mcpStatus:"未上线 MCP",mcpDetail:"API/SDK 模式，网易云 MCP 未涉及风控",
+     aiAgent:"未支持",heat:2,trend:"stable",threat:"细分竞品",
+     url:"https://dun.163.com"},
+    {n:"邦盛科技",co:"邦盛",type:"实时风控",typeColor:"var(--accent3)",
+     desc:"专注金融实时风控，自研流立方实时计算引擎(毫秒级)。服务超 200+ 金融机构，专注银行信用卡/支付/信贷风控场景。",
+     caps:["实时计算","流立方引擎","规则引擎","机器学习","知识图谱","反欺诈","信贷风控","名单管理"],
+     mcpStatus:"未上线 MCP",mcpDetail:"B端私有化部署为主，暂无开放 MCP 生态",
+     aiAgent:"未支持",heat:2,trend:"stable",threat:"低威胁",
+     url:"https://www.bangcle.com"},
+    {n:"腾讯云 · 安全运营中心",co:"腾讯",type:"安全 MCP",typeColor:"var(--accent)",
+     desc:"腾讯云 MCP 广场已发布的安全类 MCP，涵盖安全运营中心、云防火墙、主机安全等能力。AI Agent 可直接调用进行安全事件分析和响应。",
+     caps:["安全事件分析","告警管理","资产盘点","漏洞管理","配置风险","云防火墙","主机安全","日志分析"],
+     mcpStatus:"已上线 MCP",mcpDetail:"腾讯云 MCP 广场「安全运营中心」MCP 已上线",
+     aiAgent:"完全支持",heat:4,trend:"up",threat:"协同机会",
+     url:"https://cloud.tencent.com/developer/mcp"},
+  ],
+  overseas: [
+    {n:"Stripe Radar",co:"Stripe",type:"支付反欺诈",typeColor:"var(--accent2)",
+     desc:"全球最大支付平台的 AI 反欺诈引擎，基于全球数百万商户数据训练。集成在 Stripe 支付流中，提供实时欺诈评分、规则引擎、3D Secure 自适应。",
+     caps:["AI欺诈评分","规则引擎","3D Secure","机器学习","全球数据网络","实时拦截","退款保护","商户分析"],
+     mcpStatus:"未上线 MCP",mcpDetail:"REST API 完善但封闭在 Stripe 生态内，无 MCP 计划",
+     aiAgent:"未支持",heat:5,trend:"stable",threat:"标杆参考"},
+    {n:"Sift",co:"Sift Science",type:"数字信任平台",typeColor:"var(--accent3)",
+     desc:"领先的数字信任与安全平台，覆盖支付欺诈、账户接管、内容滥用、促销欺诈。服务 Airbnb、Twitter 等头部客户。Decision API 完善。",
+     caps:["支付欺诈","账户防护","内容安全","促销反作弊","机器学习","实时评分","案件管理","工作流"],
+     mcpStatus:"未上线 MCP",mcpDetail:"Decision API 成熟，但未开放 MCP/Agent 接口",
+     aiAgent:"未支持",heat:4,trend:"stable",threat:"直接竞品"},
+    {n:"DataVisor",co:"DataVisor",type:"AI 反欺诈",typeColor:"var(--warn)",
+     desc:"硅谷 AI 反欺诈独角兽，核心技术为无监督机器学习检测（UML）。能在无标签数据下自动发现欺诈模式。服务金融、电商、社交。",
+     caps:["无监督学习","特征平台","规则引擎","案件管理","设备指纹","联盟网络","实时检测","图谱分析"],
+     mcpStatus:"未上线 MCP",mcpDetail:"SaaS 闭环模式，无开放 MCP 计划",
+     aiAgent:"未支持",heat:4,trend:"stable",threat:"直接竞品"},
+    {n:"SEON",co:"SEON",type:"反欺诈 API",typeColor:"var(--purple)",
+     desc:"欧洲新兴反欺诈平台，核心能力为数字足迹分析（邮箱/手机/IP/社交媒体关联）。模块化 API 设计，集成成本低。",
+     caps:["邮箱分析","手机分析","IP分析","社交媒体足迹","设备指纹","AML筛查","规则引擎","白盒机器学习"],
+     mcpStatus:"未上线 MCP",mcpDetail:"模块化 API 成熟，但无 MCP/Agent 集成",
+     aiAgent:"未支持",heat:3,trend:"up",threat:"直接竞品"},
+    {n:"Sardine",co:"Sardine",type:"合规+反欺诈",typeColor:"var(--gold)",
+     desc:"专注 FinTech 的合规与反欺诈平台，核心能力为设备智能、行为生物识别。融合 KYC/KYB/AML 合规能力，服务加密货币和 FinTech 客户。",
+     caps:["设备智能","行为生物识别","KYC/KYB","AML合规","交易监控","制裁筛查","ACH反欺诈","加密货币"],
+     mcpStatus:"未上线 MCP",mcpDetail:"API 形态，无 MCP/Agent 公开计划",
+     aiAgent:"未支持",heat:3,trend:"up",threat:"直接竞品"},
+    {n:"Featurespace",co:"Featurespace",type:"自适应行为分析",typeColor:"var(--accent)",
+     desc:"英国 AI 反欺诈/反洗钱公司，核心技术 ARIC（自适应实时个体变化检测）引擎。被 Visa 战略投资，服务全球 Top 银行。",
+     caps:["ARIC引擎","自适应行为","实时检测","反洗钱","卡片欺诈","APP欺诈","异常检测","案件管理"],
+     mcpStatus:"未上线 MCP",mcpDetail:"银行级私有化部署，无开放 MCP 生态",
+     aiAgent:"未支持",heat:3,trend:"stable",threat:"高端竞品"},
+    {n:"Unit21",co:"Unit21",type:"风控操作系统",typeColor:"var(--accent2)",
+     desc:"风控领域的「无代码」操作系统，让风控/合规团队自主构建规则、工作流和案件管理。降低对工程团队的依赖。",
+     caps:["无代码规则","案件管理","SAR自动化","交易监控","KYC编排","机器学习","API集成","仪表盘"],
+     mcpStatus:"未上线 MCP",mcpDetail:"API + 无代码平台，暂无 MCP 探索",
+     aiAgent:"部分探索",heat:3,trend:"up",threat:"模式参考"},
+    {n:"Socure",co:"Socure",type:"身份验证+反欺诈",typeColor:"var(--purple)",
+     desc:"数字身份验证领头羊，Day Zero 身份欺诈检测能力行业领先。核心产品 Sigma Identity Fraud 覆盖 KYC 全流程。",
+     caps:["身份验证","KYC","Day Zero检测","文件核验","生物识别","地址验证","SSN验证","政治敏感人物"],
+     mcpStatus:"未上线 MCP",mcpDetail:"SaaS API 模式，无 MCP 公开计划",
+     aiAgent:"未支持",heat:3,trend:"stable",threat:"互补产品"},
+    {n:"MaxMind minFraud",co:"MaxMind",type:"IP风险+反欺诈",typeColor:"var(--accent3)",
+     desc:"全球 IP 情报与反欺诈数据服务商，GeoIP 数据库行业标准。minFraud 服务提供交易风险评分、IP 风险分析。",
+     caps:["GeoIP定位","IP风险评分","代理/VPN检测","交易风险评分","设备追踪","邮箱风险","手机风险","自定义规则"],
+     mcpStatus:"未上线 MCP",mcpDetail:"REST API 完善，IP 数据为 RCE Cloud 重要数据源参考",
+     aiAgent:"未支持",heat:3,trend:"stable",threat:"数据源参考"},
+    {n:"Persona",co:"Persona",type:"身份平台",typeColor:"var(--gold)",
+     desc:"灵活的身份验证平台，可视化编排 KYC/KYB 工作流。支持文件验证、自拍比对、数据库查询等模块化能力。",
+     caps:["文件验证","自拍比对","数据库查询","工作流编排","合规报告","风险信号","看门狗名单","Graph分析"],
+     mcpStatus:"未上线 MCP",mcpDetail:"低代码编排平台，有 API 但无 MCP 探索",
+     aiAgent:"未支持",heat:3,trend:"up",threat:"互补产品"},
+  ]
+};
+
+const months=["04","05","06","07","08","09","10","11","12","01","02","03"];
+const monthLabels=months.map((m,i)=>i<9?`25.${m}`:`26.${m}`);
+
+let curTier="all",curTab="cards";
+
+function heatDots(h){
+  let s='<div class="heat">';
+  for(let i=0;i<5;i++){
+    const cls=i<h?(h>=5?'f':h>=4?'h':'a'):'';
+    s+=`<span class="${cls}"></span>`;
+  }
+  return s+'</div>';
+}
+
+function trendIcon(t){
+  return t==='up'?'<span class="up">↑ 上升</span>':t==='down'?'<span class="down">↓ 下降</span>':'<span class="flat">→ 平稳</span>';
+}
+
+function rankBadge(i){
+  const c=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+  return `<span class="${c}">${i+1}</span>`;
+}
+
+function openBar(v){
+  const clr=v>=80?'var(--accent2)':v>=60?'var(--accent)':v>=40?'var(--accent3)':'var(--warn)';
+  return `<div class="pbar"><div class="pfill" style="width:${v}%;background:${clr}"></div></div> ${v}%`;
+}
+
+function renderCards(){
+  const el=document.getElementById('p-cards');
+  const tiers=[{k:"t1",n:"T1 大厂 × MCP 平台"},{k:"t2",n:"T2 科技公司"},{k:"t3",n:"T3 新锐企业"}];
+  let html='';
+  tiers.forEach(tier=>{
+    const items=D.filter(d=>d.t===tier.k&&(curTier==='all'||curTier===tier.k));
+    if(items.length===0)return;
+    html+=`<div class="stitle">${tier.n} <span class="badge">${items.length} 家</span></div><div class="grid">`;
+    items.forEach((d,i)=>{
+      html+=`<div class="card" data-tier="${d.t}" style="animation-delay:${i*0.05}s">
+        <div class="card-h"><span class="name" style="color:${d.c}">${d.n}</span><span class="cnt">${d.cnt} 产品</span></div>
+        <div class="card-b">
+          <div style="margin-bottom:8px"><span class="ptag">📦 ${d.p}</span></div>
+          <div>${d.ps.map(p=>'<span class="itag">'+p+'</span>').join('')}</div>
+        </div>
+        <div class="card-f">
+          <span>发布: ${d.date}</span>
+          ${heatDots(d.heat)}
+          ${trendIcon(d.trend)}
+        </div>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+
+function renderTable(){
+  const el=document.getElementById('p-table');
+  const items=D.filter(d=>curTier==='all'||curTier===d.t).sort((a,b)=>b.cnt-a.cnt);
+  let html='<div class="tw"><table><thead><tr>';
+  html+='<th>排名</th><th>企业</th><th>MCP 平台</th><th>产品数</th><th>热度</th><th>趋势</th><th>发布日期</th><th>开放度</th></tr></thead><tbody>';
+  items.forEach((d,i)=>{
+    html+=`<tr><td>${rankBadge(i)}</td><td style="color:${d.c};font-weight:600">${d.n}</td><td>${d.p}</td><td style="font-weight:700">${d.cnt}</td>`;
+    html+=`<td>${heatDots(d.heat)}</td><td>${trendIcon(d.trend)}</td><td>${d.date}</td><td>${openBar(d.open)}</td></tr>`;
+  });
+  html+='</tbody></table></div>';
+  el.innerHTML=html;
+}
+
+function renderHeatmap(){
+  const el=document.getElementById('p-heatmap');
+  const items=D.filter(d=>curTier==='all'||curTier===d.t);
+  let html='<div class="stitle">📊 月度热度追踪矩阵</div><div class="hmgrid">';
+  html+='<div></div>';
+  monthLabels.forEach(m=>html+=`<div class="hmh">${m}</div>`);
+  items.forEach(d=>{
+    html+=`<div class="hml" style="color:${d.c}">${d.n}</div>`;
+    d.hh.forEach(v=>html+=`<div class="hmc h${v}">${v||''}</div>`);
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function renderTimeline(){
+  const el=document.getElementById('p-timeline');
+  const events=[
+    {d:"2025.03",c:"腾讯云 MCP 广场上线，55+ 产品，国内首家"},
+    {d:"2025.04",c:"阿里云百炼 MCP 广场发布，50+ 产品，通义系列全面接入"},
+    {d:"2025.05",c:"字节 Coze MCP Store 开放，40+ 产品，扣子生态扩展"},
+    {d:"2025.06",c:"百度千帆 & 智谱 GLM 同步推出 MCP Store"},
+    {d:"2025.07",c:"蚂蚁集团支付宝 MCP 上线，百灵 Agent 生态启动"},
+    {d:"2025.08",c:"华为云 ModelArts MCP 发布，月之暗面 Kimi MCP 跟进"},
+    {d:"2025.09",c:"科大讯飞星火 MCP + 金山 WPS AI MCP 双双上线"},
+    {d:"2025.10",c:"京东云、360 AI MCP 发布，T2 梯队全面进场"},
+    {d:"2025.11",c:"MiniMax 海螺 AI + 小米小爱 MCP 相继推出"},
+    {d:"2025.12",c:"商汤日日新 MCP 上线，大模型厂商 MCP 化基本完成"},
+    {d:"2026.01",c:"美团、网易云 MCP 发布，本地生活 + 内容生态切入"},
+    {d:"2026.02",c:"快手 MCP 上线，可灵大模型接入，短视频赛道补全"},
+    {d:"2026.03",c:"🎯 <strong>RCE Cloud 原生 MCP 风控产品发布，全球首个风控 MCP Server + OpenClaw Skill 双模式</strong>"}
+  ];
+  let html='<div class="stitle">📅 国内 MCP 生态时间线</div><div class="tl">';
+  events.forEach(e=>{
+    html+=`<div class="tli"><div class="tld">${e.d}</div><div class="tlc">${e.c}</div></div>`;
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function renderRisk(){
+  const el=document.getElementById('p-risk');
+  let html='';
+
+  html+=`<div class="risk-hero">
+    <h2>🛡️ 风控 × 安全 × MCP：竞争格局深度分析</h2>
+    <p>在 <span class="highlight">380+ MCP 产品</span>的全球生态中，安全/风控类 MCP 近乎空白。<br>
+    本模块独立追踪 <span class="highlight">国内 10 家 + 海外 10 家</span> 风控/安全领域核心玩家的 MCP 化进展、AI Agent 适配度、以及与 RCE Cloud 的竞合关系。<br>
+    <strong style="color:var(--warn)">核心发现：目前全球风控行业中，RCE Cloud 是唯一原生 MCP 风控产品。</strong><br>
+    <span style="color:var(--accent);font-size:12px">支持展开查看每个产品的结构化明细：所属公司、MCP 进展、Agent 适配、竞合判断与官网入口。</span></p>
+  </div>`;
+
+  html+=`<div class="risk-section">
+    <div class="risk-section-title">🇨🇳 国内风控 / 安全产品 MCP 化追踪 <span class="badge" style="background:var(--warn)">${riskProducts.domestic.length} 家</span></div>
+    <div class="risk-grid">`;
+  riskProducts.domestic.forEach(p=>{
+    const mcpColor = p.mcpStatus.includes('原生')?'var(--warn)':p.mcpStatus.includes('已上线')?'var(--accent2)':p.mcpStatus.includes('间接')?'var(--accent3)':'var(--dim)';
+    const agentColor = p.aiAgent.includes('完全')?'var(--accent2)':p.aiAgent.includes('部分')?'var(--accent3)':p.aiAgent.includes('探索')?'var(--gold)':'var(--dim)';
+    const threatColor = p.threat.includes('协同')?'var(--accent2)':p.threat==='—'?'var(--dim)':p.threat.includes('直接')?'var(--warn)':p.threat.includes('潜在')?'var(--accent3)':'var(--dim)';
+    html+=`<div class="risk-card">
+      <div class="rc-head">
+        <span class="rc-name" style="color:${p.typeColor}">${p.n}</span>
+        <span class="rc-type" style="background:${p.typeColor}22;color:${p.typeColor};border:1px solid ${p.typeColor}44">${p.type}</span>
+      </div>
+      <div class="rc-desc">${p.desc}</div>
+      <div class="rc-caps">${p.caps.map(c=>'<span class="rc-cap">'+c+'</span>').join('')}</div>
+      <div class="rc-meta">
+        <span style="color:${mcpColor}">MCP: ${p.mcpStatus}</span>
+        <span style="color:${agentColor}">Agent: ${p.aiAgent}</span>
+        <span>热度: ${'🔥'.repeat(p.heat)}</span>
+        <span style="color:${threatColor}">竞合: ${p.threat}</span>
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:var(--dim);padding-top:6px;border-top:1px solid var(--border)">📌 ${p.mcpDetail}</div>
+      <details class="risk-details">
+        <summary>🧾 查看产品明细</summary>
+        <div class="risk-detail-body">
+          <div class="risk-detail-grid">
+            <div class="risk-detail-item"><span class="risk-detail-label">所属公司</span><span class="risk-detail-value">${p.co}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">产品类型</span><span class="risk-detail-value">${p.type}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">MCP 状态</span><span class="risk-detail-value" style="color:${mcpColor}">${p.mcpStatus}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">Agent 适配</span><span class="risk-detail-value" style="color:${agentColor}">${p.aiAgent}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">竞合判断</span><span class="risk-detail-value" style="color:${threatColor}">${p.threat}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">热度</span><span class="risk-detail-value">${'🔥'.repeat(p.heat)}</span></div>
+          </div>
+          <div class="risk-detail-line"><strong>产品定位：</strong>${p.desc}</div>
+          <div class="risk-detail-line"><strong>能力标签：</strong>${p.caps.join('、')}</div>
+          <div class="risk-detail-line"><strong>MCP / 渠道明细：</strong>${p.mcpDetail}</div>
+          <div class="risk-detail-line"><strong>官网入口：</strong>${p.url ? `<a class="risk-detail-link" href="${p.url}" target="_blank" rel="noreferrer">${p.url}</a>` : '—'}</div>
+        </div>
+      </details>
+    </div>`;
+  });
+  html+=`</div></div>`;
+
+  html+=`<div class="risk-section">
+    <div class="risk-section-title">🌍 海外风控 / 反欺诈产品 MCP 化追踪 <span class="badge" style="background:var(--purple)">${riskProducts.overseas.length} 家</span></div>
+    <div class="risk-grid">`;
+  riskProducts.overseas.forEach(p=>{
+    const mcpColor='var(--dim)';
+    const agentColor=p.aiAgent.includes('部分')?'var(--accent3)':p.aiAgent.includes('探索')?'var(--gold)':'var(--dim)';
+    const threatColor=p.threat.includes('直接')?'var(--warn)':p.threat.includes('高端')?'var(--accent3)':p.threat.includes('标杆')?'var(--accent)':p.threat.includes('数据')?'var(--gold)':'var(--accent2)';
+    html+=`<div class="risk-card">
+      <div class="rc-head">
+        <span class="rc-name" style="color:${p.typeColor}">${p.n}</span>
+        <span class="rc-type" style="background:${p.typeColor}22;color:${p.typeColor};border:1px solid ${p.typeColor}44">${p.type}</span>
+      </div>
+      <div class="rc-desc">${p.desc}</div>
+      <div class="rc-caps">${p.caps.map(c=>'<span class="rc-cap">'+c+'</span>').join('')}</div>
+      <div class="rc-meta">
+        <span style="color:${mcpColor}">MCP: ${p.mcpStatus}</span>
+        <span style="color:${agentColor}">Agent: ${p.aiAgent}</span>
+        <span>热度: ${'🔥'.repeat(p.heat)}</span>
+        <span style="color:${threatColor}">竞合: ${p.threat}</span>
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:var(--dim);padding-top:6px;border-top:1px solid var(--border)">📌 ${p.mcpDetail}</div>
+      <details class="risk-details">
+        <summary>🧾 查看产品明细</summary>
+        <div class="risk-detail-body">
+          <div class="risk-detail-grid">
+            <div class="risk-detail-item"><span class="risk-detail-label">所属公司</span><span class="risk-detail-value">${p.co}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">产品类型</span><span class="risk-detail-value">${p.type}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">MCP 状态</span><span class="risk-detail-value" style="color:${mcpColor}">${p.mcpStatus}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">Agent 适配</span><span class="risk-detail-value" style="color:${agentColor}">${p.aiAgent}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">竞合判断</span><span class="risk-detail-value" style="color:${threatColor}">${p.threat}</span></div>
+            <div class="risk-detail-item"><span class="risk-detail-label">热度</span><span class="risk-detail-value">${'🔥'.repeat(p.heat)}</span></div>
+          </div>
+          <div class="risk-detail-line"><strong>产品定位：</strong>${p.desc}</div>
+          <div class="risk-detail-line"><strong>能力标签：</strong>${p.caps.join('、')}</div>
+          <div class="risk-detail-line"><strong>MCP / 渠道明细：</strong>${p.mcpDetail}</div>
+          <div class="risk-detail-line"><strong>官网入口：</strong>${p.url ? `<a class="risk-detail-link" href="${p.url}" target="_blank" rel="noreferrer">${p.url}</a>` : '—'}</div>
+        </div>
+      </details>
+    </div>`;
+  });
+  html+=`</div></div>`;
+
+  html+=`<div class="risk-section">
+    <div class="risk-section-title">📊 能力维度对比：RCE Cloud vs 竞品</div>
+    <div class="radar-chart">`;
+
+  const radarDims=[
+    {dim:"MCP 原生支持",rce:100,datavisor:0,seon:0,sift:0,tongdun:0,tianyu:30},
+    {dim:"AI Agent 集成",rce:100,datavisor:5,seon:5,sift:5,tongdun:15,tianyu:40},
+    {dim:"OpenClaw/Skill",rce:100,datavisor:0,seon:0,sift:0,tongdun:0,tianyu:0},
+    {dim:"IP 风险检测",rce:85,datavisor:70,seon:90,sift:60,tongdun:60,tianyu:90},
+    {dim:"设备指纹",rce:80,datavisor:85,seon:75,sift:80,tongdun:90,tianyu:85},
+    {dim:"反欺诈规则",rce:75,datavisor:90,seon:80,sift:90,tongdun:85,tianyu:95},
+    {dim:"实时计算",rce:70,datavisor:80,seon:70,sift:85,tongdun:80,tianyu:90},
+    {dim:"开放API",rce:95,datavisor:60,seon:85,sift:70,tongdun:40,tianyu:50},
+    {dim:"全球部署",rce:60,datavisor:80,seon:75,sift:85,tongdun:30,tianyu:65},
+    {dim:"零门槛接入",rce:95,datavisor:20,seon:60,sift:30,tongdun:10,tianyu:25},
+  ];
+
+  const players=[
+    {key:"rce",name:"RCE Cloud",color:"var(--warn)"},
+    {key:"datavisor",name:"DataVisor",color:"var(--accent3)"},
+    {key:"seon",name:"SEON",color:"var(--purple)"},
+    {key:"sift",name:"Sift",color:"var(--accent)"},
+    {key:"tongdun",name:"同盾科技",color:"var(--gold)"},
+    {key:"tianyu",name:"腾讯天御",color:"var(--accent2)"},
+  ];
+
+  players.forEach(pl=>{
+    html+=`<div class="radar-item"><h4 style="color:${pl.color}">${pl.name}</h4>`;
+    radarDims.forEach(r=>{
+      const v=r[pl.key];
+      const clr=v>=80?'var(--accent2)':v>=60?'var(--accent)':v>=40?'var(--accent3)':'var(--warn)';
+      html+=`<div class="radar-bar-row">
+        <span class="radar-bar-label">${r.dim}</span>
+        <div class="radar-bar"><div class="radar-bar-fill" style="width:${v}%;background:${clr}"></div></div>
+        <span class="radar-bar-val" style="color:${clr}">${v}</span>
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+  html+=`</div></div>`;
+
+  html+=`<div class="risk-verdict">
+    <h3>💡 综合分析与战略判断</h3>
+    <div class="rv-item"><span class="rv-icon">🎯</span><div class="rv-text"><strong>MCP 空白窗口期：6-12 个月</strong><br>全球 20 家主流风控产品中，仅 RCE Cloud 原生支持 MCP 协议。腾讯天御虽有安全运营中心 MCP，但其核心风控能力（注册/登录/交易保护）尚未 MCP 化。同盾、数美、顶象等国内厂商仍处于传统 SDK/API 模式，海外 DataVisor/SEON/Sift/Sardine 均未启动 MCP 适配。这给 RCE Cloud 留下了 <strong>6-12 个月的先发窗口</strong>。</div></div>
+    <div class="rv-item"><span class="rv-icon">🔗</span><div class="rv-text"><strong>协同 > 竞争：与腾讯天御形成互补</strong><br>RCE Cloud 定位「AI-Native 出海风控」，天御定位「企业级全链路风控」。两者在技术底座上共享腾讯安全能力（IP 画像、设备指纹），但在分发渠道上完全互补：天御走腾讯云渠道，RCE Cloud 走 OpenClaw + MCP 开放生态。建议在 Phase 1 阶段推动 RCE Cloud 底层接入天御数据。</div></div>
+    <div class="rv-item"><span class="rv-icon">⚔️</span><div class="rv-text"><strong>海外竞品弱点 = 我们的切入点</strong><br>DataVisor/SEON/Sift/Sardine 的共同弱点：SaaS 闭环、无 MCP 支持、无法被 AI Agent 编排调用。随着 AI Agent 成为主流开发范式，「能不能被 Agent 调用」将成为风控产品的新选型标准。RCE Cloud 的 <strong>MCP 原生 + npx 一行启动 + 零门槛 REST 兼容</strong>，是降维打击。</div></div>
+    <div class="rv-item"><span class="rv-icon">📈</span><div class="rv-text"><strong>同盾是最需警惕的对手</strong><br>同盾已被艾瑞评为「金融智能体未来破局者」，正在积极探索大模型 + 智能体方向。一旦同盾推出 MCP Server，将凭借其金融行业客户积累形成有力竞争。建议我们在同盾 MCP 化之前完成 OpenClaw Skill 市场卡位。</div></div>
+    <div class="rv-item"><span class="rv-icon">🌐</span><div class="rv-text"><strong>OpenClaw 安全 Skill 品类垄断机会</strong><br>OpenClaw 15,000+ Skills 中安全/风控类近乎空白。RCE Cloud 若在 Phase 0-1 阶段成功上架，有机会成为该品类的 <strong>事实标准和唯一选择</strong>。参照 Stripe 在支付 API 领域的先发效应，品类垄断一旦建立，后来者很难追赶。</div></div>
+  </div>`;
+
+  el.innerHTML=html;
+}
+
+function setTab(id,el){
+  curTab=id;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+}
+
+function setTier(tier,el){
+  curTier=tier;
+  document.querySelectorAll('.controls .btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  if(curTab==='cards')renderCards();
+  else if(curTab==='table')renderTable();
+  else if(curTab==='heatmap')renderHeatmap();
+}
+
+function doFilter(){
+  const v=document.getElementById('si').value.toLowerCase();
+  if(curTab==='cards'){
+    document.querySelectorAll('.card').forEach(c=>{
+      const show=v===''||c.textContent.toLowerCase().includes(v);
+      c.style.display=show?'':'none';
+    });
+  }
+}
+
+renderCards();renderTable();renderHeatmap();renderTimeline();renderRisk();
+</script>
+</body>
+</html>
