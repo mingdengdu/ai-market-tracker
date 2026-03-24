@@ -345,7 +345,7 @@
         <section class="stats-grid">
             <div class="stat-card tencent">
                 <div class="stat-title" data-i18n="stats.tencent.title">腾讯系产品 (龙虾特工队)</div>
-                <div class="stat-value">5</div>
+                <div class="stat-value">8</div>
                 <div class="stat-desc" data-i18n="stats.tencent.desc">WorkBuddy/QClaw/QQ/云端/ADP</div>
             </div>
             <div class="stat-card alibaba">
@@ -381,7 +381,7 @@
     <footer>
         <div class="footer-content">
             <p class="footer-text" data-i18n="footer.text">OpenClaw 全球产品动态追踪 | 每日更新</p>
-            <p class="footer-text" style="margin-top: 0.5rem; opacity: 0.6;">Data updated: 2026-03-13</p>
+            <p class="footer-text" style="margin-top: 0.5rem; opacity: 0.6;">Data updated: 2026-03-24</p>
         </div>
     </footer>
 
@@ -428,162 +428,189 @@
         
         // Product data
         const products = [
-            // 腾讯 - 龙虾特工队全家桶
+            // ─── 腾讯 龙虾矩阵 ───
             {
                 id: 1,
                 company: "tencent",
-                date: "2026-03-09",
-                title: { zh: "WorkBuddy (龙虾特工队全家桶)", en: "WorkBuddy (Lobster Task Force Bundle)", ja: "WorkBuddy（ロブスタータスクフォース Bundle）" },
-                type: { zh: "AI智能体", en: "AI Agent", ja: "AIエージェント" },
-                desc: { zh: "腾讯版小龙虾，全场景桌面智能体，零部署零配置，浏览器即用，内置20+Skills技能包", en: "Tencent's lobster, full场景 desktop AI agent, zero deployment, browser-ready, 20+ built-in Skills", ja: "テンセント版小龙虾、全シーンAIエージェント、デプロイ不要、ブラウザで使える" },
-                url: "#"
+                date: "2026-03-22",
+                title: { zh: "微信 ClawBot 插件正式上线", en: "WeChat ClawBot Plugin Launch", ja: "WeChat ClawBotプラグイン正式公開" },
+                type: { zh: "AI智能体入口", en: "AI Agent Entry", ja: "AIエージェントエントリー" },
+                desc: { zh: "微信「设置-插件」上线官方ClawBot插件，14亿月活用户可两步接入OpenClaw，直接在聊天框指挥AI智能体操控电脑，成为史上最大规模AI Agent分发渠道。", en: "WeChat officially launches ClawBot plugin (Settings→Plugins). 1.4B MAU users can connect OpenClaw in 2 steps, turning WeChat chat into an AI Agent controller.", ja: "WeChat「設定→プラグイン」にClawBotを公式リリース。14億MAUが2ステップでOpenClawに接続可能に。" },
+                url: "https://finance.eastmoney.com/a/202603223679696453.html"
             },
             {
                 id: 2,
                 company: "tencent",
-                date: "2026-03-09",
-                title: { zh: "QClaw (龙虾特工队)", en: "QClaw (Lobster Task Force)", ja: "QClaw（ロブスタータスクフォース）" },
+                date: "2026-03-20",
+                title: { zh: "QClaw 开启全量公测（无需邀请码）", en: "QClaw Public Beta Launch (No Invite Required)", ja: "QClaw 一般公開ベータ開始（招待コード不要）" },
                 type: { zh: "AI智能体", en: "AI Agent", ja: "AIエージェント" },
-                desc: { zh: "一键部署版，支持微信/QQ远程操控，本地电脑轻松部署，支持Kimi/MiniMax/GLM/DeepSeek", en: "One-click deployment, WeChat/QQ remote control, local PC deployment, supports Kimi/MiniMax/GLM/DeepSeek", ja: "ワandeployment版、WeChat/QQリモート操控対応、ローカルPCにデプロイ可能" },
-                url: "#"
+                desc: { zh: "QClaw正式开启全量公测，无需邀请码，微信扫码即可远程控制电脑。同步上线微信小程序入口（首个实现微信小程序互联的龙虾产品）、灵感广场功能、v0.1.9支持语音/图片多模态交互。", en: "QClaw opens public beta — no invite code. WeChat scan to remotely control PC. New: WeChat Mini Program entry (first in class), Inspiration Plaza, v0.1.9 multimodal (voice/image).", ja: "QClaw一般公開ベータ開始。招待コード不要。WeChatスキャンでPC遠隔操作。WeChatミニプログラム連携、霊感広場機能、マルチモーダル対応。" },
+                url: "https://www.ithome.com/0/930/937.htm"
             },
             {
                 id: 3,
                 company: "tencent",
-                date: "2026-03-08",
-                title: { zh: "QQ接入OpenClaw (龙虾特工队)", en: "QQ OpenClaw Integration", ja: "QQ OpenClaw統合" },
-                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
-                desc: { zh: "QQ机器人官方接入OpenClaw，单个QQ号最多可创建5个机器人，支持多媒体交互", en: "QQ bot official OpenClaw integration, up to 5 bots per QQ account, multimedia support", ja: "QQボット公式OpenClaw対応、QQ番号당5つまでボット作成可能" },
-                url: "#"
+                date: "2026-03-11",
+                title: { zh: "腾讯"龙虾"AI产品矩阵全面发布", en: "Tencent 'Lobster' AI Agent Matrix Launch", ja: "テンセント「ロブスター」AIプロダクトマトリックス発表" },
+                type: { zh: "产品矩阵", en: "Product Suite", ja: "プロダクトスイート" },
+                desc: { zh: "腾讯集中发布覆盖全场景的龙虾矩阵：WorkBuddy（办公智能体）、QClaw（本地+微信远控）、腾讯云Lighthouse（云端部署）、ADP（企业智能体开发平台）。同步上线SkillHub社区，收录超1.3万个AI技能。", en: "Tencent launches full-stack AI Agent matrix: WorkBuddy (office agent), QClaw (local+WeChat remote), Cloud Lighthouse (cloud deploy), ADP (enterprise dev platform). SkillHub community: 13,000+ skills.", ja: "テンセントがフルスタックAIエージェントマトリックスを発表：WorkBuddy、QClaw、クラウドLighthouse、ADP企業開発プラットフォーム。SkillHub：1.3万以上のスキル。" },
+                url: "https://news.mydrivers.com/tengxun.html"
             },
             {
                 id: 4,
                 company: "tencent",
-                date: "2026-03-06",
-                title: { zh: "腾讯云Lighthouse OpenClaw (龙虾特工队)", en: "Tencent Cloud Lighthouse OpenClaw", ja: "Tencent Cloud Lighthouse OpenClaw" },
-                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
-                desc: { zh: "云端部署方案，用户规模突破10万，一键购买+一键部署", en: "Cloud deployment solution, 100K+ users, one-click purchase & deployment", ja: "クラウドデプロイ方案、用户規模10万突破、ワandeployment可能" },
-                url: "#"
+                date: "2026-03-09",
+                title: { zh: "WorkBuddy 正式上线（免部署、兼容OpenClaw技能）", en: "WorkBuddy Launch: Zero-Deploy, OpenClaw Skill Compatible", ja: "WorkBuddy正式公開：ゼロデプロイ、OpenClawスキル互換" },
+                type: { zh: "企业AI智能体", en: "Enterprise AI Agent", ja: "エンタープライズAIエージェント" },
+                desc: { zh: "腾讯全场景AI智能体WorkBuddy正式上线。核心差异：完全兼容OpenClaw技能体系、零部署（下载即用）、内置20+Skills包、支持混元/DeepSeek等多模型切换、1分钟配置企业微信远程连接。", en: "WorkBuddy goes live: fully compatible with OpenClaw skills, zero deployment (download & run), 20+ built-in Skills, multi-model support (Hunyuan/DeepSeek), 1-min WeCom remote setup.", ja: "WorkBuddy正式公開。OpenClawスキル完全互換、ゼロデプロイ、20以上のビルトインスキル、マルチモデル対応、WeCom遠隔1分設定。" },
+                url: "https://www.ithome.com/0/927/230.htm"
             },
             {
                 id: 5,
                 company: "tencent",
-                date: "2026-03-11",
-                title: { zh: "腾讯云ADP (龙虾特工队)", en: "Tencent Cloud ADP", ja: "テンセントクラウドADP" },
-                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
-                desc: { zh: "企业级智能体开发平台，部分第三方模型结束免费公测，正式进入商业化", en: "Enterprise AI agent platform, third-party models enter commercial billing", ja: "エンタープライズAIエージェントプラットフォーム、サードパーティモデル商用化" },
-                url: "#"
+                date: "2026-03-09",
+                title: { zh: "QClaw 内测曝光：一键部署OpenClaw，微信/QQ双端接入", en: "QClaw Internal Beta: One-Click OpenClaw Deploy, WeChat/QQ Access", ja: "QClaw内部テスト：ワンクリックOpenClawデプロイ、WeChat/QQ対応" },
+                type: { zh: "本地AI智能体", en: "Local AI Agent", ja: "ローカルAIエージェント" },
+                desc: { zh: "QClaw是围绕OpenClaw的产品化封装，核心是本地一键启动包。支持微信/企业微信/QQ/飞书/钉钉五大IM远控入口，「龙虾像素工作室」创作功能、定时任务首次亮相。", en: "QClaw: OpenClaw productization — local one-click launcher. 5 IM remote control channels (WeChat/WeCom/QQ/Feishu/DingTalk). New: Pixel Studio creative mode, scheduled tasks.", ja: "QClaw：OpenClawのプロダクト化。ローカルワンクリック起動。5つのIMリモートチャネル。ピクセルスタジオ、スケジュールタスク機能。" },
+                url: "https://www.ithome.com/0/927/143.htm"
             },
-            // 阿里系
             {
                 id: 6,
-                company: "alibaba",
-                date: "2026-03",
-                title: { zh: "阿里云OpenClaw全套云服务", en: "Alibaba Cloud OpenClaw Full Services", ja: "Alibaba Cloud OpenClaw 全套クラウドサービス" },
-                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
-                desc: { zh: "轻量应用服务器一键部署，月成本低至17.8元，支持QQ/飞书/钉钉集成", en: "Light server one-click deployment, from $2.5/month, QQ/DingTalk integration", ja: "Light Serverワandeployment、月額17.8元〜、QQ/飛書/钉钉統合" },
-                url: "#"
+                company: "tencent",
+                date: "2026-03-09",
+                title: { zh: "腾讯云 QQ 接入 OpenClaw", en: "QQ Integrates OpenClaw", ja: "QQがOpenClawと統合" },
+                type: { zh: "IM接入", en: "IM Integration", ja: "IM統合" },
+                desc: { zh: "腾讯QQ正式接入OpenClaw智能体框架，用户可通过QQ对话指挥龙虾执行任务，进一步扩展龙虾矩阵的IM覆盖范围。", en: "QQ officially integrates OpenClaw. Users can command AI agents through QQ chat, expanding the Lobster Matrix IM coverage.", ja: "QQがOpenClawと正式統合。QQチャットでAIエージェントを操作可能に。" },
+                url: "https://so.html5.qq.com/page/real/search_news?docid=70000021_14469aff69329865"
             },
             {
                 id: 7,
-                company: "alibaba",
-                date: "2026-03",
-                title: { zh: "阿里云HiClaw (Team版)", en: "Alibaba Cloud HiClaw (Team Edition)", ja: "Alibaba Cloud HiClaw（Team版）" },
-                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
-                desc: { zh: "Manager/Worker架构，主打团队协作，零信任安全设计，技能和内存完全隔离", en: "Manager/Worker architecture, team collaboration, zero-trust security, isolated skills & memory", ja: "Manager/Workerアーキテクチャ、チームコラボレーション、ゼロトラストセキュリティ" },
-                url: "#"
+                company: "tencent",
+                date: "2026-03-08",
+                title: { zh: "腾讯云 Lighthouse 一键部署 OpenClaw", en: "Tencent Cloud Lighthouse: One-Click OpenClaw Deploy", ja: "テンセントクラウドLighthouse：ワンクリックOpenClawデプロイ" },
+                type: { zh: "云端部署", en: "Cloud Deploy", ja: "クラウドデプロイ" },
+                desc: { zh: "腾讯云轻量应用服务器Lighthouse推出OpenClaw一键部署镜像，企业用户无需运维即可在云端运行AI智能体，与本地QClaw形成云+端双部署格局。", en: "Tencent Cloud Lighthouse releases one-click OpenClaw deployment image. Enterprise users run AI agents in cloud without ops overhead. Cloud+local dual deployment coverage.", ja: "テンセントクラウドLighthouseがOpenClawワンクリックデプロイイメージをリリース。クラウド+ローカルの二重デプロイ体制。" },
+                url: "https://c.m.163.com/news/a/KOMAISFN05568W0A.html"
             },
             {
                 id: 8,
-                company: "alibaba",
+                company: "tencent",
                 date: "2026-03-10",
-                title: { zh: "钉钉接入OpenClaw", en: "DingTalk OpenClaw Integration", ja: "钉钉OpenClaw統合" },
-                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
-                desc: { zh: "API调用限时免费至2026年3月31日，可调用钉钉AI表格、Teambition等产品技能", en: "API calls free until Mar 31 2026, supports DingTalk AI forms, Teambition integration", ja: "API呼び出し無料〜2026年3月31日、钉钉AIテーブル、Teambition等功能対応" },
-                url: "#"
+                title: { zh: "腾讯 ADP 智能体开发平台上线", en: "Tencent ADP Agent Development Platform Launch", ja: "テンセントADP エージェント開発プラットフォーム公開" },
+                type: { zh: "开发者平台", en: "Developer Platform", ja: "デベロッパープラットフォーム" },
+                desc: { zh: "腾讯智能体开发平台ADP(Agent Development Platform)正式上线，面向企业和开发者提供定制AI智能体的低代码开发工具，支持接入腾讯全系AI能力和外部MCP服务。", en: "Tencent ADP (Agent Development Platform) launches. Low-code AI agent builder for enterprises and developers, integrating Tencent AI capabilities and external MCP services.", ja: "テンセントADPエージェント開発プラットフォーム公開。企業・開発者向けローコードAIエージェントビルダー。MCP外部サービス連携対応。" },
+                url: "https://www.toutiao.com/w/1859377743375690/"
             },
+            // ─── 阿里 ───
             {
                 id: 9,
                 company: "alibaba",
                 date: "2026-03",
-                title: { zh: "PAI灵骏智算服务", en: "PAI Lingjun Smart Computing", ja: "PAI霊駿スマートコンピューティング" },
-                type: { zh: "AI平台", en: "AI Platform", ja: "AIプラットフォーム" },
-                desc: { zh: "国际站(新加坡区域)正式开服，支持按需开通", en: "International site (Singapore) officially launched, on-demand available", ja: "国際サイト（シンガポール）正式オープン、オンデマンド対応" },
-                url: "#"
+                title: { zh: "阿里 悟空 企业级AI Agent平台发布", en: "Alibaba Wukong Enterprise AI Agent Platform", ja: "アリババ悟空エンタープライズAIエージェントプラットフォーム" },
+                type: { zh: "企业AI平台", en: "Enterprise AI Platform", ja: "エンタープライズAIプラットフォーム" },
+                desc: { zh: "阿里巴巴推出企业级AI Agent平台「悟空」，CEO吴泳铭亲领Alibaba Token Hub(ATH)事业群，专注AI变现与企业服务落地，对标Salesforce Agentforce。", en: "Alibaba launches Wukong enterprise AI Agent platform, led directly by CEO Eddie Wu. Alibaba Token Hub (ATH) business unit focuses on AI monetization and enterprise deployment.", ja: "アリババが悟空エンタープライズAIエージェントプラットフォームを発表。CEO呉泳銘直轄のATH事業部が主導。" },
+                url: "https://www.toutiao.com/article/7618409039030010378/"
             },
-            // 字节跳动
             {
                 id: 10,
-                company: "bytedance",
-                date: "2026-03-09",
-                title: { zh: "火山引擎ArkClaw", en: "Volcengine ArkClaw", ja: "Volcengine ArkClaw" },
-                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
-                desc: { zh: "云上SaaS版OpenClaw，免安装，网页即用，轻松云养虾", en: "Cloud SaaS OpenClaw, no installation, browser-based, easy 'lobster farming'", ja: "クラウドSaaS版OpenClaw、インストール不要、ブラウザで使える" },
-                url: "#"
+                company: "alibaba",
+                date: "2026-03",
+                title: { zh: "阿里无影 AgentBay：国内首个云电脑MCP服务", en: "Alibaba Wuying AgentBay: First Cloud PC MCP Service in China", ja: "アリババ無影AgentBay：国内初のクラウドPCMCPサービス" },
+                type: { zh: "云端MCP", en: "Cloud MCP", ja: "クラウドMCP" },
+                desc: { zh: "阿里云无影正式发布AgentBay——国内首个支持MCP协议的云电脑服务。开发者通过AgentBay可在云端一键生成专属Agent运行环境，突破本地算力限制，动态调用云上算力和工具链。", en: "Alibaba Cloud Wuying launches AgentBay — China's first MCP-enabled cloud PC service. Developers generate cloud Agent environments on demand, bypassing local compute limits.", ja: "アリババクラウド無影がAgentBayを発表。国内初のMCPプロトコル対応クラウドPCサービス。オンデマンドでクラウドAgentランタイムを生成。" },
+                url: "https://www.toutiao.com/topic/7502988374802794511/"
             },
             {
                 id: 11,
-                company: "bytedance",
-                date: "2026-03-02",
-                title: { zh: "PICO OS 6", en: "PICO OS 6", ja: "PICO OS 6" },
-                type: { zh: "XR操作系统", en: "XR OS", ja: "XR OS" },
-                desc: { zh: "下一代空间操作系统预告发布，针对XR行业痛点进行底层重构", en: "Next-gen spatial OS preview, addressing XR industry pain points", ja: "次世代空間OSプレビュー公開、XR業界の問題点底層から再構築" },
-                url: "#"
+                company: "alibaba",
+                date: "2026-03",
+                title: { zh: "支付宝 MCP Server：AI智能体一键接入支付", en: "Alipay MCP Server: One-Click Payment for AI Agents", ja: "支付宝MCPサーバー：AIエージェントがワンクリックで決済連携" },
+                type: { zh: "支付MCP", en: "Payment MCP", ja: "ペイメントMCP" },
+                desc: { zh: "支付宝联合魔搭社区推出「支付MCP Server」，AI智能体可一键接入支付能力，首个将消费级支付接口暴露为MCP工具的主流平台，率先完成支付场景的AI Agent化。", en: "Alipay + ModelScope launch Payment MCP Server. AI agents can invoke payment capabilities with one call. First mainstream platform to expose consumer payment as an MCP tool.", ja: "支付宝とModelScopeが「支払いMCPサーバー」を発表。AIエージェントがワンクリックで決済機能を利用可能に。" },
+                url: "https://www.sohu.com/a/882916055_121956424"
             },
             {
                 id: 12,
-                company: "bytedance",
-                date: "2026-03-02",
-                title: { zh: "豆包App 购物功能", en: "Doubao App Shopping", ja: "豆包App ショッピング機能" },
-                type: { zh: "AI助手", en: "AI Assistant", ja: "AIアシスタント" },
-                desc: { zh: "内测购物下单功能，用户可在App内直接完成商品浏览、下单与支付全流程", en: "In-app shopping, complete browsing to payment in one app", ja: "アプリ内ショッピング対応、閲覧から決済までワ.stopで完了" },
-                url: "#"
+                company: "alibaba",
+                date: "2026-03-10",
+                title: { zh: "钉钉接入OpenClaw，5分钟生成企业专属Agent", en: "DingTalk Integrates OpenClaw: Enterprise Agent in 5 Minutes", ja: "DingTalkがOpenClaw統合：5分で企業専用Agent生成" },
+                type: { zh: "企业协作", en: "Enterprise Collaboration", ja: "エンタープライズコラボ" },
+                desc: { zh: "钉钉正式接入OpenClaw，阿里云百炼MCP平台集成高德地图、无影云桌面等50余款工具，支持5分钟内生成企业专属Agent，覆盖700万+企业用户。", en: "DingTalk integrates OpenClaw. Alibaba Cloud Bailian MCP platform: 50+ tools (Amap, cloud desktop). 5-min enterprise Agent generation, 7M+ enterprise customers.", ja: "DingTalkがOpenClawと統合。阿里云百炼MCPプラットフォームに高德地図など50以上のツール。5分で企業専用Agent生成。" },
+                url: "https://www.thepaper.cn/newsDetail_forward_30791965"
             },
-            // 全球/其他厂商
+            // ─── 字节跳动 ───
             {
                 id: 13,
-                company: "global",
-                date: "2026-03-03",
-                title: { zh: "OpenClaw GitHub Star 全球第一", en: "OpenClaw #1 on GitHub", ja: "OpenClaw GitHub 世界一位" },
-                type: { zh: "开源项目", en: "Open Source", ja: "オープンソース" },
-                desc: { zh: "24.8万星标登顶GitHub，超越Linux和React，成为全球最受欢迎开源项目", en: "248K stars, #1 on GitHub, surpassing Linux & React", ja: "24.8万Star GitHub一位、LinuxとReactを超える" },
-                url: "https://github.com"
+                company: "bytedance",
+                date: "2026-03-09",
+                title: { zh: "火山引擎 ArkClaw 正式上线：云端零配置龙虾", en: "Volcano Engine ArkClaw Launch: Zero-Config Cloud Agent", ja: "火山エンジン ArkClaw 正式公開：ゼロ設定クラウドAgent" },
+                type: { zh: "云端AI智能体", en: "Cloud AI Agent", ja: "クラウドAIエージェント" },
+                desc: { zh: "字节旗下火山引擎正式推出ArkClaw——云端SaaS版OpenClaw。三大差异：无需本地部署（打开网页即用）、7×24在线不受本机电源限制、面向企业提供团队协作和权限管理。同日与腾讯WorkBuddy同台竞争。", en: "Volcano Engine launches ArkClaw — cloud SaaS OpenClaw. 3 key differences vs local: zero deployment (open browser), 24/7 online (no local power dependency), enterprise team management. Launched same day as Tencent WorkBuddy.", ja: "火山エンジンがArkClawを発表。クラウドSaaS版OpenClaw。ゼロデプロイ（ブラウザで即利用）、24時間365日稼働、エンタープライズチーム管理。テンセントWorkBuddyと同日競合。" },
+                url: "https://www.toutiao.com/article/7619610601794404873/"
             },
             {
                 id: 14,
-                company: "global",
-                date: "2026-03-12",
-                title: { zh: "百度 红手指Operator", en: "Baidu RedFinger Operator", ja: "百度 RedFinger Operator" },
-                type: { zh: "AI应用", en: "AI App", ja: "AIアプリ" },
-                desc: { zh: "全球首款手机龙虾应用，下载App即可手机养虾，上线即爆火", en: "World's first mobile lobster app, download to farm lobster on phone, instantly popular", ja: "世界初の手机龙虾アプリ、ダウンロードしてスマホで养殖可能" },
-                url: "#"
+                company: "bytedance",
+                date: "2026-03-02",
+                title: { zh: "PICO OS 6 发布：VR设备原生AI Agent", en: "PICO OS 6: Native AI Agent on VR Hardware", ja: "PICO OS 6：VRハードウェアネイティブAIエージェント" },
+                type: { zh: "设备端AI", en: "On-Device AI", ja: "デバイスAI" },
+                desc: { zh: "字节跳动PICO发布OS 6，VR头显设备原生内置AI Agent能力，支持语音指令控制应用、内容推荐、实时翻译，首个将AI Agent能力深度集成到XR硬件的国产厂商。", en: "ByteDance PICO launches OS 6 with native AI Agent integration in VR headsets. Voice command control, content recommendations, real-time translation. First Chinese XR hardware with deep AI Agent integration.", ja: "ByteDance PICOがOS 6を発表。VRヘッドセットにAIエージェントをネイティブ統合。音声コマンド、コンテンツ推薦、リアルタイム翻訳。" },
+                url: "https://news.mydrivers.com/zijietiaodong.html"
             },
             {
                 id: 15,
-                company: "global",
+                company: "bytedance",
                 date: "2026-03",
-                title: { zh: "百度智能云 OpenClaw", en: "Baidu Cloud OpenClaw", ja: "百度クラウド OpenClaw" },
-                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
-                desc: { zh: "提供从算力资源到模型服务的全方位支持", en: "Full support from computing resources to model services", ja: "コンピューティングリソースからモデルサービスまでのフルサポート" },
-                url: "#"
+                title: { zh: "豆包 App 全面升级：购物+多模态+MCP插件支持", en: "Doubao App Upgrade: Shopping + Multimodal + MCP Plugin", ja: "豆包アプリ大幅アップグレード：ショッピング+マルチモーダル+MCPプラグイン" },
+                type: { zh: "消费端AI", en: "Consumer AI", ja: "コンシューマーAI" },
+                desc: { zh: "豆包App新增购物导购功能，支持多模态交互（图片识别、语音），并开放MCP插件接入，100M+ MAU的消费端分发成为字节AI生态最大流量入口。", en: "Doubao adds shopping assistant, multimodal (image recognition, voice), and MCP plugin support. 100M+ MAU consumer distribution becomes ByteDance AI ecosystem's primary traffic channel.", ja: "豆包がショッピング機能、マルチモーダル、MCPプラグインを追加。1億MAU超の消費者向け配信チャネルがByteDance AIエコシステムの主要入口に。" },
+                url: "https://www.toutiao.com/article/7616612884818264591/"
             },
+            // ─── 全球 ───
             {
                 id: 16,
                 company: "global",
-                date: "2026-01",
-                title: { zh: "优刻得 OpenClaw部署镜像", en: "UCloud OpenClaw Deployment", ja: "UCloud OpenClaw デプロイ" },
-                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
-                desc: { zh: "行业内率先实现云端部署，服务已上线美、新、日等多个海外节点", en: "First cloud deployment, available in US, Singapore, Japan and other regions", ja: "業界初のクラウドデプロイ、米・新加坡・日本など海外ノード対応" },
-                url: "#"
+                date: "2026-03-18",
+                title: { zh: "Anthropic Claude Skills 开放标准：技能可跨平台移植", en: "Anthropic Claude Skills Open Standard: Cross-Platform Portability", ja: "Anthropic Claude Skillsオープンスタンダード：クロスプラットフォーム移植" },
+                type: { zh: "协议标准", en: "Protocol Standard", ja: "プロトコル標準" },
+                desc: { zh: "Anthropic发布官方33页Claude Skills构建指南，Skills标准开放（2025年12月18日发布，3月全面落地），Skills不再仅限Claude平台，可移植到任何兼容MCP的Agent客户端，含StopFailure钩子、持久化插件数据等新能力。", en: "Anthropic releases 33-page Claude Skills guide. Skills Open Standard (announced Dec 2025, fully landed Mar 2026) — skills portable across any MCP-compatible agent client. New: StopFailure hooks, persistent plugin data.", ja: "AnthropicがClaude Skills 33ページガイドを公開。Skills Open Standard（2025年12月発表、2026年3月完全展開）。MCPクライアント間でスキルが移植可能に。" },
+                url: "https://zhuanlan.zhihu.com/p/1989616726883713512"
             },
             {
                 id: 17,
                 company: "global",
+                date: "2026-03-12",
+                title: { zh: "百度「心响」通用Agent上线，MCP协议整合多模型", en: "Baidu 'Xinxiang' General Agent: MCP Multi-Model Orchestration", ja: "百度「心響」汎用エージェント：MCPマルチモデルオーケストレーション" },
+                type: { zh: "通用AI Agent", en: "General AI Agent", ja: "汎用AIエージェント" },
+                desc: { zh: "百度推出类通用Agent「心响」，利用MCP协议整合多种AI模型和外部工具，百度地图宣布支持MCP接口。定位对标Manus，以百度搜索+地图生态为护城河，主打C端搜索增强场景。", en: "Baidu launches Xinxiang general agent using MCP to orchestrate multiple AI models. Baidu Maps adds MCP interface. Competing with Manus, moat from Baidu Search + Maps ecosystem, targeting consumer search-augmentation.", ja: "百度が心響汎用エージェントを発表。MCPで複数AIモデルを統合。百度地図がMCPインターフェース対応。Manusと競合。" },
+                url: "https://www.thepaper.cn/newsDetail_forward_30791965"
+            },
+            {
+                id: 18,
+                company: "global",
                 date: "2026-03",
-                title: { zh: "华为云 OpenClaw部署", en: "Huawei Cloud OpenClaw", ja: "ファーウェイクラウド OpenClaw" },
-                type: { zh: "云部署", en: "Cloud Deployment", ja: "クラウドデプロイ" },
-                desc: { zh: "一键部署入门教程，接入微信新手保姆级指南", en: "One-click deployment guide, WeChat integration tutorial", ja: "ワandeployment入門ガイド、WeChat連携チュートリアル" },
-                url: "#"
+                title: { zh: "OpenClaw GitHub 全球开源项目第一（25万+ Stars）", en: "OpenClaw Tops GitHub Global Open Source (250K+ Stars)", ja: "OpenClawがGitHub世界第1位（25万以上Stars）" },
+                type: { zh: "开源里程碑", en: "Open Source Milestone", ja: "オープンソースマイルストーン" },
+                desc: { zh: "OpenClaw在GitHub斩获超25万星标，成为开源史上增长最快的项目之一。单周吃掉4.19万亿Token，推动国产大模型调用量登顶全球第一。各大厂围绕OpenClaw生态竞相布局。", en: "OpenClaw surpasses 250K GitHub stars — among the fastest-growing open source projects in history. 4.19 trillion tokens consumed in one week, driving domestic LLM usage to global #1. All major tech companies now building in OpenClaw ecosystem.", ja: "OpenClawがGitHubスターが25万超え。オープンソース史上最速成長プロジェクトの1つ。週間4.19兆Token消費。" },
+                url: "https://www.toutiao.com/article/7616968545481589288/"
+            },
+            {
+                id: 19,
+                company: "global",
+                date: "2026-03",
+                title: { zh: "腾讯×字节×阿里：国产三只「龙虾」对比分析", en: "Tencent vs ByteDance vs Alibaba: Three Chinese 'Lobsters' Compared", ja: "テンセント×バイトダンス×アリババ：国産3大ロブスター比較" },
+                type: { zh: "市场分析", en: "Market Analysis", ja: "市場分析" },
+                desc: { zh: "WorkBuddy（腾讯）= 企业微信生态+零部署，主打办公场景；ArkClaw（字节）= 云端SaaS+团队协作，主打7×24在线；CoPaw（阿里）= 钉钉企业生态+AI开发平台，主打企业定制。三强格局基本成型，各有护城河。", en: "WorkBuddy (Tencent) = WeCom ecosystem + zero deploy, targets office; ArkClaw (ByteDance) = cloud SaaS + team collab, 24/7 online; CoPaw (Alibaba) = DingTalk + AI dev platform, enterprise custom. Three-way competitive landscape set.", ja: "WorkBuddy（テンセント）=WeCom+ゼロデプロイ；ArkClaw（ByteDance）=クラウドSaaS+24/7；CoPaw（アリババ）=DingTalk+AIデブ。3強構図が確立。" },
+                url: "https://c.m.163.com/news/a/KOMAISFN05568W0A.html"
+            },
+            {
+                id: 20,
+                company: "global",
+                date: "2026-03",
+                title: { zh: "优刻得 / 华为云：OpenClaw 云端部署镜像上线", en: "UCloud / Huawei Cloud: OpenClaw Cloud Deployment Images", ja: "UCloud / 華為クラウド：OpenClawクラウドデプロイイメージ" },
+                type: { zh: "云部署", en: "Cloud Deploy", ja: "クラウドデプロイ" },
+                desc: { zh: "优刻得（UCloud）和华为云ModelArts相继上线OpenClaw一键部署镜像，覆盖国内主要云厂商，形成腾讯云+阿里云+华为云+优刻得全面支持OpenClaw部署的格局。", en: "UCloud and Huawei Cloud ModelArts launch OpenClaw one-click deployment images. Now all major Chinese cloud providers (Tencent/Alibaba/Huawei/UCloud) support OpenClaw deployment.", ja: "UCloudと華為クラウドModelArtsがOpenClawワンクリックデプロイを公開。主要国内クラウドがOpenClawデプロイを全面サポート。" },
+                url: "https://news.mydrivers.com/tengxun.html"
             }
         ];
         
