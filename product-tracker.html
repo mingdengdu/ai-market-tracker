@@ -660,7 +660,7 @@
                             <span class="company-dot"></span>
                             <span>${translations[currentLang].card.company}: ${product.company.toUpperCase()}</span>
                         </div>
-                        <a href="${product.url}" class="card-link">${translations[currentLang].card.readMore} →</a>
+                        <a href="https://www.google.com/search?q=${encodeURIComponent(product.title[currentLang])}" target="_blank" rel="noopener" class="card-link">${translations[currentLang].card.readMore} →</a>
                     </div>
                 </div>
             `).join('');
